@@ -21,18 +21,19 @@ const PyodideComponent = () => {
     const runSnowballStemmer = async (event) => {
         //https://pypi.org/project/snowballstemmer/
         event.preventDefault();
-        pyodide.globals.set("to_analyze", snowballstemmerInput);
+        pyodide.globals.set("alo_analyze", snowballstemmerInput);
         try {
             await pyodide.loadPackage("micropip");
             const micropip = pyodide.pyimport("micropip");
             await micropip.install("snowballstemmer");
             await pyodide.runPython(`
             import snowballstemmer
+            import People
             stemmer = snowballstemmer.stemmer('english')
-            result = stemmer.stemWords(to_analyze.split())
+            alo_result = stemmer.stemWords(alo_analyze.split())
             `);
 
-            setOutput(preOutput => preOutput + pyodide.globals.get('result') + "\n");
+            setOutput(preOutput => preOutput + pyodide.globals.get('alo_result') + "\n");
         } catch (error) {
             setOutput(`Error: ${error}`);
         }
